@@ -17,3 +17,8 @@ Step 3: Import and write constructor function
             ngRedux.configureStore(rootReducer, INITIAL_STATE);
         }
     }
+
+Step 4: Import select in component
+    
+    @select() value;            // in class
+    <p>{{ value | async }}</p>  // in template
