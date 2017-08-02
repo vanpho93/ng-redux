@@ -5,3 +5,15 @@ Step 2: Create store.ts
     - Create a root reducer function
 
 Step 3: Import and write constructor function
+    - Import 2 things from ng2-redux
+
+    imports: [
+        BrowserModule,
+        NgReduxModule
+    ]
+
+    export class AppModule {
+        constructor(ngRedux: NgRedux<IAppState>) {
+            ngRedux.configureStore(rootReducer, INITIAL_STATE);
+        }
+    }

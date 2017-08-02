@@ -5,6 +5,10 @@ export interface IAppState {
     };
 }
 
-const rootReducer = (state: IAppState, action: { type: String }): IAppState => {
+export const rootReducer = (state: IAppState, action: { type: String }): IAppState => {
     return state;
+};
+
+export const INITIAL_STATE = {
+    value: 10
 };
