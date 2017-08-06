@@ -11,10 +11,16 @@ import * as firebase from 'firebase';
   providers: [AngularFireAuth, AngularFireDatabase]
 })
 export class AppComponent implements OnInit {
+  txtEmail: string;
+  txtPassword: string;
   user: Observable<firebase.User>;
   name: String = 'Nguyen Van Pho';
   items: FirebaseListObservable<any[]>;
   constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {}
+  signUp() {
+    this.auth.auth.createUserWithEmailAndPassword(this.txtEmail, this.txtPassword)
+    .catch(err => alert(err.toString()));
+  }
 
   ngOnInit(): void {
     this.items = this.db.list('/message');

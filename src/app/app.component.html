@@ -1,4 +1,15 @@
 <h1>{{ name }}</h1>
+
+<!--Form to sign in -->
+<ul *ngIf="!(user | async)">
+  <input placeholder="Enter your email" [(ngModel)]="txtEmail"/>
+  <br><br>
+  <input placeholder="Enter your password" [(ngModel)]="txtPassword" type="password" />
+  <br><br>
+  <button (click)="signUp();">Sign up</button>
+</ul>
+
+<!--When user exist-->
 <ul *ngIf="user | async">
   <p>List messages</p>
   <li *ngFor="let item of items | async">{{ item.message }}</li>
