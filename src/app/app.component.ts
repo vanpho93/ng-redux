@@ -11,19 +11,37 @@ import * as firebase from 'firebase';
   providers: [AngularFireAuth, AngularFireDatabase]
 })
 export class AppComponent implements OnInit {
+  txtPost: string;
   txtEmail: string;
   txtPassword: string;
   user: Observable<firebase.User>;
   name: String = 'Nguyen Van Pho';
-  items: FirebaseListObservable<any[]>;
+  posts: FirebaseListObservable<any[]>;
   constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {}
   signUp() {
     this.auth.auth.createUserWithEmailAndPassword(this.txtEmail, this.txtPassword)
     .catch(err => alert(err.toString()));
   }
 
+  signOut() {
+    this.auth.auth.signOut()
+    .catch(err => alert(err.toString()));
+  }
+
+  addPost() {
+    this.posts.push({ content: this.txtPost });
+    this.txtPost = '';
+  }
+
+  remove(id: string) {
+    this.posts.remove(id);
+  }
+
   ngOnInit(): void {
-    this.items = this.db.list('/message');
     this.user = this.auth.authState;
+    this.user.subscribe(authData => {
+      const uid = authData.uid;
+      this.posts = this.db.list(`/${uid}/posts`);
+    });
   }
 }

@@ -1,5 +1,6 @@
 <h1>{{ name }}</h1>
-
+<button *ngIf="(user | async)" (click)="signOut();">Sign out</button>
+<br><br>
 <!--Form to sign in -->
 <ul *ngIf="!(user | async)">
   <input placeholder="Enter your email" [(ngModel)]="txtEmail"/>
@@ -10,7 +11,17 @@
 </ul>
 
 <!--When user exist-->
-<ul *ngIf="user | async">
-  <p>List messages</p>
-  <li *ngFor="let item of items | async">{{ item.message }}</li>
-</ul>
+<div *ngIf="user | async">
+  <div id="add-post">
+    <input placeholder="Enter your post" [(ngModel)]="txtPost" />
+    <br><br>
+    <button (click)="addPost();">Add post</button>
+  </div>
+  <ul *ngIf="(posts | async)?.length > -1">
+    <p>List post</p>
+    <li *ngFor="let post of posts | async">
+      <p>{{ post.content }}</p>
+      <button (click)="remove(post.$key);">delete</button>
+    </li>
+  </ul>
+</div>
