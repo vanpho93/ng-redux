@@ -10,17 +10,23 @@ import * as firebase from 'firebase';
   styleUrls: ['./app.component.css'],
   providers: [AngularFireAuth, AngularFireDatabase]
 })
+
 export class AppComponent implements OnInit {
+  preload = true;
   txtPost: string;
   txtEmail: string;
   txtPassword: string;
   user: Observable<firebase.User>;
-  name: String = 'Nguyen Van Pho';
   posts: FirebaseListObservable<any[]>;
   constructor(private db: AngularFireDatabase, private auth: AngularFireAuth) {}
   signUp() {
     this.auth.auth.createUserWithEmailAndPassword(this.txtEmail, this.txtPassword)
-    .catch(err => alert(err.toString()));
+    .catch(err => alert(err.message));
+  }
+
+  signIn() {
+    this.auth.auth.signInWithEmailAndPassword(this.txtEmail, this.txtPassword)
+    .catch(err => alert(err.message));
   }
 
   signOut() {
@@ -40,8 +46,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.auth.authState;
     this.user.subscribe(authData => {
-      const uid = authData.uid;
-      this.posts = this.db.list(`/${uid}/posts`);
+      if (this.preload) { this.preload = false; }
+      if (authData.uid) {
+        const uid = authData.uid;
+        this.posts = this.db.list(`/${uid}/posts`);
+      }
     });
   }
 }
