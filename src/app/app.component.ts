@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     this.user = this.auth.authState;
     this.user.subscribe(authData => {
       if (this.preload) { this.preload = false; }
-      if (authData.uid) {
+      if (authData && authData.uid) {
         const uid = authData.uid;
         this.posts = this.db.list(`/${uid}/posts`);
       }

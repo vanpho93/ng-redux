@@ -1,0 +1,10 @@
+<div *ngIf="(user | async)">
+    <p>ABCD</p>
+</div>
+<div>
+    <input placeholder="Email" [(ngModel)]="txtEmail">
+    <br><br>
+    <input placeholder="Password" [(ngModel)]="txtPassword">
+    <br><br>
+    <button (click)="signUp();">Sign Up</button><button (click)="signIn();">Sign In</button>
+</div>
